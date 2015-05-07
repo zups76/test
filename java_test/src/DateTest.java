@@ -8,7 +8,6 @@ public class DateTest {
 	public static void main(String[] args) {
 		Calendar c = Calendar.getInstance();
 
-		//
 		// 현재 시간에 날짜 부분을 0으로 설정하면 이전 달의 마지막 날짜가 된다.
 		c.set(Calendar.DATE, 0);
 
