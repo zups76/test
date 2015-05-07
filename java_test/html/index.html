@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>SOC</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+	<script type="text/javascript" src="jquery-1.10.2.js"></script>
+
+	<script type="text/javascript" src="jquery-ui/jquery-ui-1.10.3.custom.js"></script>
+	<link rel="stylesheet" type="text/css" href="jquery-ui/base/jquery-ui.css">
+
+	<link rel="stylesheet" type="text/css" href="layout/layout-default-latest.css">
+	<script type="text/javascript" src="layout/jquery.layout-latest.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="zTree2/css/metroStyle/style.css">
+	<script type="text/javascript" src="zTree2/jquery.ztree.all-3.5.js"></script>
+
+
+
+
+	<style type="text/css">
+
+	/* CSS below is only for cosmetic and demo purposes */
+	body {
+		padding:		0px; /* test destroy */
+	}
+	button {
+		font-size:		1em;
+		padding:		3px 7px;
+	}
+	.ui-layout-west button {
+		width:			100%;
+		padding:		3px 2px;
+	}
+	p {
+		margin: 1em 0;
+	}
+	h3 {
+		font-size:		1em;
+		font-weight:	bold;
+		margin:			1em 0 1ex;
+	}
+
+	.ui-layout-north {
+		z-index: 10 !important;
+	}
+
+	.ui-layout-north ,
+	.ui-layout-south ,
+	.ui-layout-west ,
+	.ui-layout-east ,
+	.ui-layout-center {
+		border:		0px none;
+		padding:	0px; /* match .ui-layout-pane padding */
+	}
+
+	.ui-layout-center .ui-layout-pane-center {
+		padding:	0;
+		overflow:	hidden;
+		}
+		.ui-layout-center h4 ,
+		.ui-layout-center h5 {
+			padding:		0;
+			margin:			10px 0;
+		}
+		.ui-layout-center .ui-layout-pane-center h4 ,
+		.ui-layout-center .ui-layout-pane-center h5 {
+			padding:		10px;
+			margin:			0;
+		}
+		.ui-layout-center .ui-layout-pane-center h4 {
+			border-bottom:	1px solid #BBB;
+			background:		#F6F6F6;
+		}
+		.ui-layout-center .ui-layout-pane-center h5 {
+			border-top:	1px solid #BBB;
+			background:		#F6F6F6;
+		}
+
+	</style>
+
+	<script type="text/javascript" src="/lib/js/jquery-latest.js"></script>
+	<script type="text/javascript" src="/lib/js/jquery-ui-latest.js"></script>
+	<script type="text/javascript" src="/lib/js/jquery.layout-latest.js"></script>
+	<script type="text/javascript" src="/lib/js/debug.js"></script>
+
+
+
+	<script type="text/javascript">
+	
+	
+	
+	var setting = {
+			view: {
+				//showLine: false
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				beforeClick: beforeClick,
+				onClick: onClick,
+				onDblClick: function(){}
+			}
+		};
+	function beforeClick(treeId, treeNode, clickFlag) {
+		return (treeNode.click != false);
+	}
+	function onClick(event, treeId, treeNode, clickFlag) {
+		expandNode(treeNode);
+		$('#contents_view').text(treeNode.name + ' - ' + treeNode.pId);
+	}
+
+	function expandNode(node) {
+		var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+
+		zTree.expandNode(node, null, null, null);
+
+	}
+
+	var zNodes =[
+		{ id: 1, pId: 0, name:"서비스그룹 #1", open:true},
+		{ id: 2, pId: 1, name:"테스트 서비스 1", icon:"zTree2/css/zTreeStyle/img/diy/9.png"},
+		{ id: 3, pId: 2, name:"leaf node 111", icon:"zTree2/css/zTreeStyle/img/diy/8.png"},
+		{ id: 4, pId: 2, name:"leaf node 112"},
+		{ id: 5, pId: 2, name:"leaf node 113"},
+		{ id: 6, pId: 2, name:"leaf node 114"},
+
+		{ id: 7, pId: 1, name:"테스트 서비스 2"},
+		{ id: 8, pId: 7, name:"leaf node 121"},
+		{ id: 9, pId: 7, name:"leaf node 122"},
+		{ id: 10, pId: 7, name:"leaf node 123"},
+		{ id: 11, pId: 7, name:"leaf node 124"},
+
+		{ id: 12, pId: 1, name:"테스트 서비스 3", isParent:true},
+
+
+		{ id: 13, pId: 0, name:"서비스그룹 #2"},
+		{ id: 14, pId: 13, name:"테스트 서비스 3"},
+		{ id: 15, pId: 14, name:"leaf node 111"},
+		{ id: 16, pId: 14, name:"leaf node 112"},
+		{ id: 17, pId: 14, name:"leaf node 113"},
+		{ id: 18, pId: 14, name:"leaf node 114"},
+
+		{ id: 19, pId: 13, name:"테스트 서비스 4"},
+		{ id: 20, pId: 19, name:"leaf node 121"},
+		{ id: 21, pId: 19, name:"leaf node 122"},
+		{ id: 22, pId: 19, name:"leaf node 123"},
+		{ id: 23, pId: 19, name:"leaf node 124"},
+
+		{ id: 24, pId: 13, name:"테스트 서비스 5"},
+		{ id: 25, pId: 24, name:"leaf node 121"},
+		{ id: 26, pId: 24, name:"leaf node 122"},
+		{ id: 27, pId: 24, name:"leaf node 123"},
+		{ id: 28, pId: 24, name:"leaf node 124"},
+
+
+		{ id: 29, pId: 0, name:"서비스그룹 #3", isParent:true},
+
+		{ id: 30, pId: 100, name:"서비스 #0"}
+
+	];
+
+	
+	
+	
+	
+	
+	$(document).ready(function () {
+		$('#layout_box').layout({
+			initChildren:				false
+		,	destroyChildren:			false
+		,	stateManagement__enabled:	true // maintain state between destroy/create
+		,	includeChildren:			false
+		,	north__resizable:			false
+		//,	north__showOverflowOnHover:	true
+		,	north__closable:			false
+		,	north__slidable:			false
+		,	north__spacing_open:		0
+		,	north__size:				110
+		,	west__size:					200
+		,	west__spacing_open:			10
+		});
+
+		$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+		
+		$('#btn_search').click(function(){
+			$('#form_search').slideToggle('slow');
+		});
+	});
+	function dsf(btn){
+		$(btn).closest('#form_search').slideToggle('slow');
+	}
+	</script>
+
+</head>
+<body style="background:#f0f0f0;">
+
+<div id="layout_box" style="height: 500px;">
+
+
+<div class="ui-layout-north" style="overflow: visible;">
+	<!-- 
+	<table style="background: #eee; width: 100%; height: 300px; position: absolute; z-index: 100;">
+		<tr><td>T</td></tr>
+	</table>
+	 -->
+</div>
+<div class="ui-layout-west">
+	<div style="text-align: right;">
+		<button id="btn_refresh" style="width: auto;">새로고침</button>
+		<button id="btn_search" style="width: auto;">확장검색</button>
+		<button id="search_btn2" style="width: auto;">초기화</button>
+	</div>
+	<div id="form_search" style="display: none; width: 100%; background: #F8F8F8;">
+		<table style="width: 100%; border-top: 1px solid #555; border-bottom: 1px solid #555;">
+			<tr>
+				<td>서비스명</td>
+				<td><input type="text" /></td>
+			</tr>
+			<tr><td>T</td></tr>
+			<tr><td>T</td></tr>
+			<tr><td>T</td></tr>
+			<tr><td>T</td></tr>
+			<tr><td>T</td></tr>
+			<tr>
+				<td colspan="2">
+					<div style="float: left;">
+						<button style="width: auto;" onclick="dsf(this);">닫기</button>
+					</div>
+					<div style="float: right;">
+						<button id="search_btn2" style="width: auto;">검색</button>
+						<button id="search_btn2" style="width: auto;">초기화</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<ul id="treeDemo" class="ztree"></ul>
+</div>
+<div class="ui-layout-center">
+	<div id="contents_view">
+	</div>
+</div>
+
+</div>
+</body>
+</html>
