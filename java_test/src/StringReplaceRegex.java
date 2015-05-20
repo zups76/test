@@ -9,5 +9,6 @@ public class StringReplaceRegex {
 		System.out.println("aaaaa{aaa}aa{abc}aaaa".replaceAll("[{][a]{3}[}]", "---"));
 		System.out.println("aaaaa{aaa}aa{abc}aaaa".replaceAll("[{]aaa[}]", "---"));
 		System.out.println("aaaaa{aaa}aa{abc}aaaa".replaceAll("\\{aaa\\}", "---"));
+		System.out.println("aaaaa|aaa|aa|abc|aaaa".replaceAll("[|]", "---"));
 	}
 }
