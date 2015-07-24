@@ -6,10 +6,14 @@
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 
+import org.apache.http.client.ClientProtocolException;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.ClientHttpRequest;
+import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
@@ -23,12 +27,12 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 public class Rest {
 
-	private static void template(boolean parse) {
+	private static void template(boolean parse) throws Exception {
 
 		RequestCallback callback = new RequestCallback() {
 			@Override
 			public void doWithRequest(ClientHttpRequest request) throws IOException {
-				request.getHeaders().add("Authorization", "admin:cson");
+				request.getHeaders().add("Authorization", "root:P@ssw0rd");
 			}
 		};
 
@@ -56,6 +60,7 @@ public class Rest {
 			@Override
 			public ClientHttpResponse extractData(ClientHttpResponse response) throws IOException {
 
+				final BaseVo vo = new BaseVo();
 				// the SAX way:
 				try {
 					XMLReader myReader = XMLReaderFactory.createXMLReader();
@@ -101,6 +106,8 @@ public class Rest {
 						@Override
 						public void characters(char[] arg0, int arg1, int arg2) throws SAXException {
 							System.out.print(">");
+							if(this.tag.equals("data"))
+								vo.setCreate_dt("");
 							System.out.print(String.valueOf(arg0) .substring(arg1, arg1 + arg2));
 							this.tag = "";
 						}
@@ -147,14 +154,22 @@ public class Rest {
 
 		ResponseExtractor<ClientHttpResponse> extractor = parse ? extractor2 : extractor1;
 
-		RestTemplate d = new RestTemplate();
-
-		// vb-rest-verdeLicense.dtd
-		// d.execute("http://106.240.250.74/mc/rest/verdeUser",
-		d.execute("http://106.240.250.74/mc/rest/verdeEvent?queryType=server", HttpMethod.GET, callback, extractor);
-		// d.execute("http://106.240.250.74/mc/rest/verdeLicense",
-		// d.execute("http://106.240.250.74/mc/rest/userSelect/t1",
 		
+		HttpComponentsClientHttpRequestFactory aa = new HttpComponentsClientHttpRequestFactory(new TrustSelfSignedCertHttpClientFactory().getObject());
+		
+		RestTemplate d = new RestTemplate(aa);
+/*
+		d.execute("https://112.221.44.42:8443/mc/rest/verdeUser",
+		// vb-rest-verdeLicense.dtd
+//		 d.execute("http://106.240.250.74/mc/rest/verdeLicense",
+//		  d.execute("http://106.240.250.74/mc/rest/monitoring/servers",
+//		d.execute("http://106.240.250.74/mc/rest/verdeEvent?queryType=session",
+				 HttpMethod.GET, callback, extractor);*/
+		 d.execute("https://cloud.smplatform.go.kr/cloudmesh/dashBoardController.do?acton=dashBoardXml",
+//				 d.execute("http://106.240.250.74/mc/rest/verdeLicense",
+//				  d.execute("http://106.240.250.74/mc/rest/monitoring/servers",
+//				d.execute("http://106.240.250.74/mc/rest/verdeEvent?queryType=session",
+						 HttpMethod.GET, callback, extractor);
 	}
 
 	/**
